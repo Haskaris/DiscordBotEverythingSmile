@@ -16,7 +16,7 @@ module.exports = class MessageEvent extends BaseEvent {
         const usedPrefix = message.content.slice(0, prefix.length);
 
         if (prefix === usedPrefix) {
-            const [ cmdName, ...cmdArgs] = message.content.slice(prefix.length).split(/\s+/);//messageSplited;
+            const [ cmdName, ...cmdArgs ] = message.content.slice(prefix.length).split(/\s+/);
             const command = client.commands.get(cmdName);
             if (command) {
                 command.run(client, message, cmdArgs);

@@ -1,15 +1,18 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
 const StateManager = require('../../utils/StateManager');
 
+const guildAdminRole = new Map();
+
 module.exports = class ChangePrefixCommand extends BaseCommand {
     constructor() {
-        super('chprefix', 'owner', []);
+        super('chprefix', 'admin', []);
         this.connection = StateManager.connection;
     }
 
     async run(client, message, args) {
         //Si le propriétaire du serveur a envoyé le message
-        if (message.member.id === message.guild.ownerID) {
+        if (message.member.roles.cache.some(r => guildAdminRole.get(message.guild.id) === r.name)
+            || (message.member.id === message.guild.ownerID)) {
             //S'il y a un argument
             if (args.length) {
                 if (args[0].startsWith('\'')) {
@@ -42,3 +45,10 @@ module.exports = class ChangePrefixCommand extends BaseCommand {
         }
     }
 }
+
+StateManager.on('adminRoleFetched', (guildId, role) => {
+    guildAdminRole.set(guildId, role);
+});
+StateManager.on('adminRoleUpdated', (guildId, role) => {
+    guildAdminRole.set(guildId, role);
+});

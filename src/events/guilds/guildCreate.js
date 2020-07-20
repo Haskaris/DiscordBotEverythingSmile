@@ -1,5 +1,6 @@
 const BaseEvent = require('../../utils/structures/BaseEvent');
 const StateManager = require('../../utils/StateManager');
+const { Discord } = require('discord.js');
 
 module.exports = class GuildCreateEvent extends BaseEvent {
     constructor() {
