@@ -19,7 +19,6 @@ module.exports = class ChangePrefixCommand extends BaseCommand {
                             newPrefix = newPrefix.concat(element, " ");
                         });
                         newPrefix = newPrefix.slice(1, newPrefix.length - 2);
-                        console.log(newPrefix);
                         try {
                             this.connection.query(
                                 `UPDATE GuildConfigurable SET cmdPrefix='${newPrefix}' WHERE guildId='${message.guild.id}'`
