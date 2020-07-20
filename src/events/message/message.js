@@ -1,0 +1,33 @@
+const BaseEvent = require('../../utils/structures/BaseEvent');
+const StateManager = require('../../utils/StateManager');
+
+const guildCmdPrefixes = new Map();
+
+module.exports = class MessageEvent extends BaseEvent {
+    constructor() {
+        super('message');
+        this.connection = StateManager.connection;
+    }
+
+    async run(client, message) {
+        if (message.author.bot) return;
+
+        const prefix = guildCmdPrefixes.get(message.guild.id);
+        const usedPrefix = message.content.slice(0, prefix.length);
+
+        if (prefix === usedPrefix) {
+            const [ cmdName, ...cmdArgs] = message.content.slice(prefix.length).split(/\s+/);//messageSplited;
+            const command = client.commands.get(cmdName);
+            if (command) {
+                command.run(client, message, cmdArgs);
+            }
+        }
+    }
+}
+
+StateManager.on('prefixFetched', (guildId, prefix) => {
+    guildCmdPrefixes.set(guildId, prefix);
+});
+StateManager.on('prefixUpdate', (guildId, prefix) => {
+    guildCmdPrefixes.set(guildId, prefix);
+});
