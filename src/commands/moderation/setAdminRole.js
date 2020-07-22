@@ -24,8 +24,6 @@ module.exports = class SetAdminRoleCommand extends BaseCommand {
                                 this.connection.query(
                                     `UPDATE GuildConfigurable SET adminRole='${newRole}' WHERE guildId='${message.guild.id}'`
                                 );
-                                console.log("ID DE GUILD : " + message.guild.id);
-                                console.log("NOM DU NOUEAUV ROLE : " + newRole);
                                 StateManager.emit('adminRoleUpdated', message.guild.id, newRole);
                                 message.channel.send(`Role Admin mis à jour avec succes ! :ok_hand:`);
                             } catch (err) {

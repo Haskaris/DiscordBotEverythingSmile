@@ -6,8 +6,3 @@ module.exports = mysql.createConnection({
     password: process.env.DB_PASS,
     database: process.env.DB_NAME
 });
-/*.then((connection) => {
-    connection.execute('CREATE TABLE Guilds(guildId VARCHAR(255))')
-})
-.then(() => console.log('Good'))
-.catch(err => console.log(err));*/
