@@ -17,9 +17,8 @@ module.exports = class PlayCommand extends BaseCommand {
             const tracks = searchResults.tracks.slice(0, 10);
             const tracksInfo = tracks.map(r => `${++i}) ${r.title}`).join('\n');
             const embed = new MessageEmbed()
-                .setAuthor(client.user.tag, client.user.displayAvatarURL())
-                .setDescription(tracksInfo)
-                .setFooter('Music Result');
+                .setTitle('Music Result')
+                .setDescription(tracksInfo);
             
             message.channel.send(embed);
             
@@ -43,7 +42,6 @@ module.exports = class PlayCommand extends BaseCommand {
                 console.log(err);
                 console.log("ERREUR");
             }
-            
         }
     }
 }
