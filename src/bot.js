@@ -11,7 +11,6 @@ const { registerCommands, registerEvents, registerMusicEvents } = require('./uti
 (async () => {
 
     client.commands = new Map();
-    client.musicPlayers = new Map();
 
     await registerCommands(client, '../commands');
     await registerEvents(client, '../events');
