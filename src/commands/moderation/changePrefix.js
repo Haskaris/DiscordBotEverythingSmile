@@ -32,16 +32,16 @@ module.exports = class ChangePrefixCommand extends BaseCommand {
                             console.log(err);
                         };
                     } else {
-                        message.channel.send(`Il manque l'appostrophe de fin`);
+                        message.channel.send(`Il manque l'appostrophe de fin.`);
                     }
                 } else {
-                    message.channel.send(`Il manque l'appostrophe de début`);
+                    message.channel.send(`Il manque l'appostrophe de début.`);
                 }
             } else {
-                message.channel.send(`Il manque le prefix`);
+                message.channel.send(`Il manque le prefix.`);
             }
         } else {
-            message.channel.send(`HOP HOP HOP TU FAIS QUOI LA COUSIN ?`);
+            message.channel.send(`Tu n'as pas le droit de modifier le prefix. :confused:`);
         }
     }
 }

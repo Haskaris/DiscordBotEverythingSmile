@@ -17,13 +17,15 @@ const { registerCommands, registerEvents, registerMusicEvents } = require('./uti
 
     await client.login(process.env.BOT_TOKEN);
 
-    client.music = new ErelaClient(client, [
+
+    //Étudier en profondeur l'ajout de musique
+    /*client.music = new ErelaClient(client, [
         {
             host: process.env.HOST,
             port: process.env.PORT,
             password: process.env.PASSWORD
         }
-    ]);
+    ]);*/
 
-    await registerMusicEvents(client.music, '../musicEvents');
+    //await registerMusicEvents(client.music, '../musicEvents');
 })();
