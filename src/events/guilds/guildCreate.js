@@ -9,6 +9,7 @@ module.exports = class GuildCreateEvent extends BaseEvent {
     }
 
     async run(client, guild) {
+        console.log('create called');
         try {
             await this.connection.query(
                 `INSERT INTO Guilds VALUES ('${guild.id}','${guild.ownerID}')`
@@ -17,7 +18,7 @@ module.exports = class GuildCreateEvent extends BaseEvent {
                 `INSERT INTO GuildConfigurable (guildId) VALUES ('${guild.id}')`
             );
             //Changer 'wi ' par la valeur par défaut du mot d'invocation
-            StateManager.emit('prefixUpdate', guild.id, 'wi ');
+            StateManager.prefixUpdated(guild.id, 'wi ');
         } catch (err) {
             console.log("Problème d'insertion dans la BDD");
             console.log(err);

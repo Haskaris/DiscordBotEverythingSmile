@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs').promises;
 const BaseCommand = require('./structures/BaseCommand');
 const BaseEvent = require('./structures/BaseEvent');
+const StateManager = require('./StateManager');
 
 async function registerCommands(client, dir = '') {
     const filePath = path.join(__dirname, dir);

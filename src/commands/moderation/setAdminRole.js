@@ -3,10 +3,10 @@ const StateManager = require('../../utils/StateManager');
 
 module.exports = class SetAdminRoleCommand extends BaseCommand {
     constructor() {
-        super('setadminrole', 'owner', []);
-        this.connection = StateManager.connection;
+        super('setadminrole', 'moderation', []);
     }
 
+    //TODO: Vérifier que le role existe bien
     async run(client, message, args) {
         //Si le propriétaire du serveur a envoyé le message
         if (message.member.id === message.guild.ownerID) {
@@ -21,10 +21,10 @@ module.exports = class SetAdminRoleCommand extends BaseCommand {
                         newRole = newRole.slice(1, newRole.length - 2);
                         if (newRole.length > 0) {
                             try {
-                                this.connection.query(
+                                await StateManager.getConnection().query(
                                     `UPDATE GuildConfigurable SET adminRole='${newRole}' WHERE guildId='${message.guild.id}'`
                                 );
-                                StateManager.emit('adminRoleUpdated', message.guild.id, newRole);
+                                StateManager.adminRoleUpdated(message.guild.id, newRole);
                                 message.channel.send(`Role Admin mis à jour avec succes ! :ok_hand:`);
                             } catch (err) {
                                 console.log(err);
@@ -46,3 +46,4 @@ module.exports = class SetAdminRoleCommand extends BaseCommand {
         }
     }
 }
+

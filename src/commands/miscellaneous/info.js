@@ -4,12 +4,11 @@ const StateManager = require('../../utils/StateManager');
 module.exports = class HelpCommand extends BaseCommand {
     constructor() {
         super('info', 'miscellaneous', []);
-        this.connection = StateManager.connection;
     }
 
     async run(client, message, args) {
         try {
-            await this.connection.query(
+            StateManager.getConnection().query(
                 `SELECT cmdPrefix, adminRole, modLogId FROM GuildConfigurable WHERE guildId='${message.guild.id}'`
             ).then(result => {
                 message.channel.send(`Bot d'Haskaris\nEn construction :slight_smile:\n`);

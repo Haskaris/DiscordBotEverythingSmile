@@ -1,17 +1,14 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
 const StateManager = require('../../utils/StateManager');
 
-const guildAdminRole = new Map();
-
 module.exports = class ChangeSuffixCommand extends BaseCommand {
     constructor() {
-        super('chsuffix', 'admin', []);
-        this.connection = StateManager.connection;
+        super('chsuffix', 'moderation', []);
     }
 
     async run(client, message, args) {
         //Si le propriétaire du serveur a envoyé le message
-        if (message.member.roles.cache.some(r => guildAdminRole.get(message.guild.id) === r.name)
+        if (message.member.roles.cache.some(r => StateManager.getAdminRole.get(message.guild.id) === r.name)
             || (message.member.id === message.guild.ownerID)) {
             //S'il y a un argument
             if (args.length) {
@@ -23,10 +20,10 @@ module.exports = class ChangeSuffixCommand extends BaseCommand {
                         });
                         newSuffix = newSuffix.slice(1, newSuffix.length - 2);
                         try {
-                            this.connection.query(
+                            await StateManager.getConnection().query(
                                 `UPDATE GuildConfigurable SET nameSuffix='${newSuffix}' WHERE guildId='${message.guild.id}'`
                             );
-                            StateManager.emit('nameSuffix', message.guild.id, newSuffix);
+                            StateManager.suffixUpdated(message.guild.id, newSuffix);
                             message.channel.send(`Mise à jour avec succes ! :ok_hand:`);
                         } catch (err) {
                             console.log(err);
@@ -45,10 +42,3 @@ module.exports = class ChangeSuffixCommand extends BaseCommand {
         }
     }
 }
-
-StateManager.on('adminRoleFetched', (guildId, role) => {
-    guildAdminRole.set(guildId, role);
-});
-StateManager.on('adminRoleUpdated', (guildId, role) => {
-    guildAdminRole.set(guildId, role);
-});
