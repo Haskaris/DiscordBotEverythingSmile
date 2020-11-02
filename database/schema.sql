@@ -1,5 +1,7 @@
 CREATE DATABASE discordBot;
 
+USE discordBot; 
+
 CREATE TABLE Guilds (
     id VARCHAR(100) NOT NULL PRIMARY KEY,
     ownerId VARCHAR(100) NOT NULL
