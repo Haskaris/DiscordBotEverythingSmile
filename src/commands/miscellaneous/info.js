@@ -6,16 +6,19 @@ module.exports = class InfoCommand extends BaseCommand {
         super('info', 'miscellaneous', []);
     }
 
+    //TODO Réussir à supprimer la commande select
     async run(client, message, args) {
         try {
             StateManager.getConnection().query(
-                `SELECT cmdPrefix, adminRole, modLogId FROM GuildConfigurable WHERE guildId='${message.guild.id}'`
+                `SELECT modLogId FROM GuildConfigurable WHERE guildId='${message.guild.id}'`
             ).then(result => {
-                message.channel.send(`Bot d'Haskaris\nEn construction :slight_smile:\n`);
-                const cmdPrefix = result[0][0].cmdPrefix;
-                const adminRole = result[0][0].adminRole;
+                const guildId = message.guild.id;
                 const modLogId = result[0][0].modLogId;
-                message.channel.send(`Commande d'invocation:'${cmdPrefix}'\nRole admin:'${adminRole}'\nID Log moderation:'${modLogId}'\n`);
+                message.channel.send(`
+                En construction\n
+                Commande d'invocation: ${StateManager.getPrefix().get(guildId)}\n
+                Role admin: ${StateManager.getAdminRole().get(guildId)}\n
+                ID Log moderation:'${modLogId}'\n`);
             }).catch(err => {
                 console.log("Problème lors de la requête (select)");
                 console.log(err);
