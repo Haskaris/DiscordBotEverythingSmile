@@ -1,7 +1,7 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
 const StateManager = require('../../utils/StateManager');
 
-module.exports = class HelpCommand extends BaseCommand {
+module.exports = class InfoCommand extends BaseCommand {
     constructor() {
         super('info', 'miscellaneous', []);
     }
