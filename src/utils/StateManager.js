@@ -5,6 +5,7 @@ const connection = require('../../database/db');
 let guildAdminRole = new Map();
 let guildPrefix = new Map();
 let guildSuffix = new Map();
+let guildShhh = new Map();
 
 class StateManager extends EventEmitter {
     constructor(opts) {
@@ -26,6 +27,29 @@ class StateManager extends EventEmitter {
         guildSuffix.set(guildId, suffix);
     }
 
+    shhhUpdated(guildId, member) {
+        let shhh = guildShhh.get(guildId);
+        //S'il n'y en avait pas déjà
+        if (shhh == null) {
+            shhh = new Array();
+        }
+        if (shhh.indexOf(member) == -1) {
+            shhh.push(member);
+            guildShhh.set(guildId, shhh);
+        } 
+    }
+
+    shhhRemove(guildId, member) {
+        let shhh = guildShhh.get(guildId);
+        //S'il n'y en avait pas déjà
+        if (shhh == null) return;
+        const index = shhh.indexOf(member);
+        if (index > -1) {
+            shhh.splice(index, 1);
+            guildShhh.set(guildId, shhh);
+        } 
+    }
+
     getAdminRole() {
         return guildAdminRole;
     }
@@ -36,6 +60,10 @@ class StateManager extends EventEmitter {
 
     getSuffix() {
         return guildSuffix;
+    }
+
+    getShhh() {
+        return guildShhh;
     }
 
     getConnection() {

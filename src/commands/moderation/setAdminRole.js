@@ -25,24 +25,24 @@ module.exports = class SetAdminRoleCommand extends BaseCommand {
                                     `UPDATE GuildConfigurable SET adminRole='${newRole}' WHERE guildId='${message.guild.id}'`
                                 );
                                 StateManager.adminRoleUpdated(message.guild.id, newRole);
-                                message.channel.send(`Role Admin mis à jour avec succes ! :ok_hand:`);
+                                message.reply(`Role Admin mis à jour avec succes ! :ok_hand:`);
                             } catch (err) {
                                 console.log(err);
                             };
                         } else {
-                            message.channel.send(`Impossible d'assigner un role sans nom`);
+                            message.reply(`Impossible d'assigner un role sans nom`);
                         }
                     } else {
-                        message.channel.send(`Il manque l'appostrophe de fin`);
+                        message.reply(`Il manque l'appostrophe de fin`);
                     }
                 } else {
-                    message.channel.send(`Il manque l'appostrophe de début`);
+                    message.reply(`Il manque l'appostrophe de début`);
                 }
             } else {
-                message.channel.send(`Il manque le role`);
+                message.reply(`Il manque le role`);
             }
         } else {
-            message.channel.send(`Seul le propriétaire du serveur peut changer le role de modérateur`);
+            message.reply(`Seul le propriétaire du serveur peut changer le role de modérateur`);
         }
     }
 }

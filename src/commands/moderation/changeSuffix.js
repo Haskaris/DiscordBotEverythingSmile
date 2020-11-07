@@ -24,21 +24,21 @@ module.exports = class ChangeSuffixCommand extends BaseCommand {
                                 `UPDATE GuildConfigurable SET nameSuffix='${newSuffix}' WHERE guildId='${message.guild.id}'`
                             );
                             StateManager.suffixUpdated(message.guild.id, newSuffix);
-                            message.channel.send(`Mise à jour avec succes ! :ok_hand:`);
+                            message.reply(`Mise à jour avec succes ! :ok_hand:`);
                         } catch (err) {
                             console.log(err);
                         };
                     } else {
-                        message.channel.send(`Il manque l'appostrophe de fin.`);
+                        message.reply(`Il manque l'appostrophe de fin.`);
                     }
                 } else {
-                    message.channel.send(`Il manque l'appostrophe de début.`);
+                    message.reply(`Il manque l'appostrophe de début.`);
                 }
             } else {
-                message.channel.send(`Il manque le suffix.`);
+                message.reply(`Il manque le suffix.`);
             }
         } else {
-            message.channel.send(`Tu n'as pas le droit de modifier le suffix. :confused:`);
+            message.reply(`Tu n'as pas le droit de modifier le suffix. :confused:`);
         }
     }
 }
