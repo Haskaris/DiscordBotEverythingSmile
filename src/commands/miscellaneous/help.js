@@ -20,6 +20,8 @@ module.exports = class HelpCommand extends BaseCommand {
         .setTitle('Liste des commandes')
         // Set the main content of the embed
         .addFields(
+            { name: 'shhh', value: 'Censure un utilisateur' },
+            { name: 'unshhh', value: 'Dé-censure un utilisateur' },
             { name: 'help', value: 'Donne toutes les commandes disponibles' },
             { name: 'info', value: 'Donne toutes les données du serveur présente dans la base de donnée' },
             { name: 'chprefix', value: 'Change le prefix d\'invocation' },
