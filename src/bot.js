@@ -17,6 +17,8 @@ const { registerCommands, registerEvents, registerMusicEvents } = require('./uti
 
     await client.login(process.env.BOT_TOKEN);
 
+    setInterval(StateManager.clearXPBlocker, 2500);
+    setInterval(StateManager.clearShhh, 300000);
 
     //Étudier en profondeur l'ajout de musique
     /*client.music = new ErelaClient(client, [

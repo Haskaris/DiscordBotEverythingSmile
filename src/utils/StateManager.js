@@ -6,6 +6,7 @@ let guildAdminRole = new Map();
 let guildPrefix = new Map();
 let guildSuffix = new Map();
 let guildShhh = new Map();
+let memberXPUsed = new Array();
 
 class StateManager extends EventEmitter {
     constructor(opts) {
@@ -69,6 +70,33 @@ class StateManager extends EventEmitter {
     getConnection() {
         return this.connection;
     }
+
+    getXPBlocker() {
+        return memberXPUsed;
+    }
+
+    addXPBlocker(guildId, memberId) {
+        memberXPUsed.push([guildId, memberId]);
+    }
+
+    clearXPBlocker() {
+        memberXPUsed = new Array();
+    }
+
+    clearShhh() {
+        guildShhh = new Map();
+    }
+
+    isItemInArray(array, item) {
+        for (var i = 0; i < array.length; i++) {
+            // This if statement depends on the format of your array
+            if (array[i][0] == item[0] && array[i][1] == item[1]) {
+                return true;   // Found it
+            }
+        }
+        return false;   // Not found
+    }
+
 }
 
 module.exports = new StateManager();
