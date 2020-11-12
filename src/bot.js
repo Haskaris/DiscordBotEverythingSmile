@@ -3,7 +3,7 @@ const { Client } = require('discord.js');
 const { ErelaClient } = require('erela.js');
 
 //Création du client
-const client = new Client();
+const client = new Client(/*{ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] }*/);
 const StateManager = require('./utils/StateManager');
 
 const { registerCommands, registerEvents, registerMusicEvents } = require('./utils/register');
