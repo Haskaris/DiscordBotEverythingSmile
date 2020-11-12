@@ -43,10 +43,12 @@ module.exports = class MessageEvent extends BaseEvent {
                 StateManager.getConnection().query(
                     `SELECT lvl, xp FROM XPTable WHERE guildId='${guildId}' and memberId='${authorId}'`
                 ).then(result => {
+                    let lvl = 1;
+                    let xp = 0;
                     if (result[0].length == 0) {
                         //Le membre n'a pas de niveau dans la guild
                         //On le crée
-                    try { 
+                        try { 
                             StateManager.getConnection().query(
                                 `INSERT INTO XPTable (guildId, memberId) VALUES ('${guildId}','${authorId}')`
                             );
@@ -54,29 +56,29 @@ module.exports = class MessageEvent extends BaseEvent {
                             console.log(err);
                         }
                     } else {
-                        let lvl = result[0][0].lvl;
-                        let xp = result[0][0].xp;
-                        /* lvl -> xp required for next level -> next lvl
-                        * 1 -> 50 -> 2
-                        * 2 -> 100 -> 3
-                        * 3 -> 150 -> 4
-                        */
-                        const xpRequired = lvl * 50
-                        const xpOfThisMessage = Math.floor((Math.random() * 11) + 5)
-                        xp = xp + xpOfThisMessage
-                        if (xp >= xpRequired) {
-                            xp = xp - xpRequired;
-                            lvl = lvl + 1;
-                            message.channel.send(`Et voilà ${message.author} qui passe lvl ${lvl} !! :partying_face:`);
-                        }
-                        //Le member a déjà un tuple à lui
-                        try {
-                            StateManager.getConnection().query(
-                                `UPDATE XPTable SET xp='${xp}', lvl='${lvl}' WHERE guildId='${guildId}' and memberId='${authorId}'`
-                            );
-                        } catch (err) {
-                            console.log(err);
-                        }
+                        lvl = result[0][0].lvl;
+                        xp = result[0][0].xp;
+                    }
+                    /* lvl -> xp required for next level -> next lvl
+                    * 1 -> 50 -> 2
+                    * 2 -> 100 -> 3
+                    * 3 -> 150 -> 4
+                    */
+                    const xpRequired = lvl * 50
+                    const xpOfThisMessage = Math.floor((Math.random() * 11) + 5)
+                    xp = xp + xpOfThisMessage
+                    if (xp >= xpRequired) {
+                        xp = xp - xpRequired;
+                        lvl = lvl + 1;
+                        message.channel.send(`Et voilà ${message.author} qui passe lvl ${lvl} !! :partying_face:`);
+                    }
+                    //Le member a déjà un tuple à lui
+                    try {
+                        StateManager.getConnection().query(
+                            `UPDATE XPTable SET xp='${xp}', lvl='${lvl}' WHERE guildId='${guildId}' and memberId='${authorId}'`
+                        );
+                    } catch (err) {
+                        console.log(err);
                     }
                     StateManager.addXPBlocker(guildId, authorId);
                 }).catch(err => {
