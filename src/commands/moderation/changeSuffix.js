@@ -8,7 +8,7 @@ module.exports = class ChangeSuffixCommand extends BaseCommand {
 
     async run(client, message, args) {
         //Si le propriétaire du serveur a envoyé le message
-        if (message.member.roles.cache.some(r => StateManager.getAdminRole.get(message.guild.id) === r.name)
+        if (message.member.roles.cache.some(r => StateManager.getAdminRole().get(message.guild.id) === r.name)
             || (message.member.id === message.guild.ownerID)) {
             //S'il y a un argument
             if (args.length) {
