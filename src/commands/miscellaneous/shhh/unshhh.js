@@ -3,7 +3,7 @@ const StateManager = require('../../../utils/StateManager');
 
 module.exports = class UnshhhCommand extends BaseCommand {
     constructor() {
-        super('unshhh', 'miscellaneous', []);
+        super('unshhh', 'miscellaneous', ['untg']);
     }
 
     async run(client, message, args) {

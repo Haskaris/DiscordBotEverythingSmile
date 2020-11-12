@@ -3,7 +3,7 @@ const StateManager = require('../../../utils/StateManager');
 
 module.exports = class ShhhCommand extends BaseCommand {
     constructor() {
-        super('shhh', 'miscellaneous', []);
+        super('shhh', 'miscellaneous', ['tg']);
     }
 
     //Il envoie le message en double ?

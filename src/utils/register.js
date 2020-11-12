@@ -15,6 +15,11 @@ async function registerCommands(client, dir = '') {
             const Command = require(path.join(filePath, file));
             if (Command.prototype instanceof BaseCommand) {
                 const cmd = new Command();
+                if (cmd.aliases.length != 0) {
+                    cmd.aliases.forEach(element => {
+                        client.commands.set(element, cmd);
+                    });
+                }
                 client.commands.set(cmd.name, cmd);
             }
         }
