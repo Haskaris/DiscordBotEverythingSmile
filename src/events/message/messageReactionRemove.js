@@ -22,8 +22,6 @@ module.exports = class MessageReactionRemoveEvent extends BaseEvent {
                 }
             }
 
-            const channel = message.guild.channels.cache.get(roleChannelId);
-
             StateManager.getConnection().query(
                 `SELECT gre.roleId FROM GuildRoleEmoji gre, GuildConfigurable gc WHERE gre.guildId='${reaction.message.guild.id}' and gre.guildId = gc.guildId and gc.roleChannelId='${reaction.message.channel.id}' and gre.emoji='${reaction.emoji.id}'`
             ).then(result => {
