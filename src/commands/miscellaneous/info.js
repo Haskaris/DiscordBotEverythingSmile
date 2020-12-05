@@ -14,7 +14,10 @@ module.exports = class InfoCommand extends BaseCommand {
                 `SELECT modLogId FROM GuildConfigurable WHERE guildId='${message.guild.id}'`
             ).then(result => {
                 const guildId = message.guild.id;
-                const modLogId = result[0][0].modLogId;
+                var modLogId = "Aucun";
+                if (result[0][0].modLogId) {
+                    modLogId = result[0][0].modLogId;
+                }
                 
                 const embed = new MessageEmbed()
                 // Set the color of the embed

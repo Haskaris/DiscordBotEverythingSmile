@@ -1,9 +1,9 @@
 const BaseEvent = require('../../utils/structures/BaseEvent');
 const StateManager = require('../../utils/StateManager');
 
-module.exports = class MessageReactionAddEvent extends BaseEvent {
+module.exports = class MessageReactionRemoveEvent extends BaseEvent {
     constructor() {
-        super('messageReactionAdd');
+        super('messageReactionRemove');
     }
 
     async run(client, reaction, user) {
@@ -23,7 +23,7 @@ module.exports = class MessageReactionAddEvent extends BaseEvent {
             reaction.message.guild.members.fetch({ user, cache: true })
             .then(e => {
                 reaction.message.guild.roles.fetch({ cache: true });
-                reaction.message.guild.member(user).roles.add(reaction.message.guild.roles.cache.get(result[0][0].roleId));
+                reaction.message.guild.member(user).roles.remove(reaction.message.guild.roles.cache.get(result[0][0].roleId));
             })
             .catch(console.error);
         });
