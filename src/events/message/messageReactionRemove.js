@@ -7,26 +7,34 @@ module.exports = class MessageReactionRemoveEvent extends BaseEvent {
     }
 
     async run(client, reaction, user) {
-        if (user.id === client.user.id) return;
-        if (reaction.partial) {
-            try {
-                await reaction.fetch();
-            } catch (error) {
-                console.error('Something went wrong when fetching the message: ', error);
-                return;
-            }
-        }
+        //Si la réaction est dans le channel de role
+        //Alors c'est l'option de react2role
+        const roleChannelId = StateManager.getRoleChannelId().get(reaction.message.guild.id);
+        if (roleChannelId == reaction.message.channel.id) {
+            if (user.id === client.user.id) return;
 
-        StateManager.getConnection().query(
-            `SELECT roleId, emoji FROM GuildRoleEmoji WHERE guildId='${reaction.message.guild.id}' and roleChannelId='${reaction.message.channel.id}' and messageId='${reaction.message.id}'`
-        ).then(result => {
-            reaction.message.guild.members.fetch({ user, cache: true })
-            .then(e => {
-                reaction.message.guild.roles.fetch({ cache: true });
-                reaction.message.guild.member(user).roles.remove(reaction.message.guild.roles.cache.get(result[0][0].roleId));
-            })
-            .catch(console.error);
-        });
+            if (reaction.partial) {
+                try {
+                    await reaction.fetch();
+                } catch (error) {
+                    console.error('Something went wrong when fetching the message: ', error);
+                    return;
+                }
+            }
+
+            const channel = message.guild.channels.cache.get(roleChannelId);
+
+            StateManager.getConnection().query(
+                `SELECT gre.roleId FROM GuildRoleEmoji gre, GuildConfigurable gc WHERE gre.guildId='${reaction.message.guild.id}' and gre.guildId = gc.guildId and gc.roleChannelId='${reaction.message.channel.id}' and gre.emoji='${reaction.emoji.id}'`
+            ).then(result => {
+                reaction.message.guild.members.fetch({ user, cache: true })
+                .then(e => {
+                    reaction.message.guild.roles.fetch({ cache: true });
+                    reaction.message.guild.member(user).roles.remove(reaction.message.guild.roles.cache.get(result[0][0].roleId));
+                })
+                .catch(console.error);
+            });
+        }
     }
 }
 

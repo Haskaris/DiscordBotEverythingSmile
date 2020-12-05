@@ -3,6 +3,7 @@ const connection = require('../../database/db');
 
 //Variable globale
 let guildAdminRole = new Map();
+let guildRoleChannelId = new Map();
 let guildPrefix = new Map();
 let guildSuffix = new Map();
 let guildShhh = new Map();
@@ -18,6 +19,10 @@ class StateManager extends EventEmitter {
 
     adminRoleUpdated(guildId, role) {
         guildAdminRole.set(guildId, role);
+    }
+
+    roleChannelUpdated(guildId, roleChannelId) {
+        guildRoleChannelId.set(guildId, roleChannelId);
     }
 
     prefixUpdated(guildId, prefix) {
@@ -53,6 +58,10 @@ class StateManager extends EventEmitter {
 
     getAdminRole() {
         return guildAdminRole;
+    }
+
+    getRoleChannelId() {
+        return guildRoleChannelId;
     }
 
     getPrefix() {
