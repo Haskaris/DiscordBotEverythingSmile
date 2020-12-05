@@ -15,7 +15,7 @@ module.exports = class UnshhhCommand extends BaseCommand {
                 message.channel.send(`${member} :partying_face:`)
             });
         } else {
-            message.reply("You didn't mention a user to unshhh!");
+            message.reply("Tu n'as mentionné personne à dé-taire !");
         }
     }
 }

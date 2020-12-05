@@ -10,6 +10,6 @@ module.exports = class TestCommand extends BaseCommand {
     }
 
     async run(client, message, args) {
-        //test impossible sur la version livrée
+        
     }
 }

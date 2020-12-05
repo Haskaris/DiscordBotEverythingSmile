@@ -1,30 +1,31 @@
-const BaseCommand = require('../../utils/structures/BaseCommand');
-const StateManager = require('../../utils/StateManager');
+const BaseCommand = require('../../../utils/structures/BaseCommand');
+const StateManager = require('../../../utils/StateManager');
 
-module.exports = class ChangeSuffixCommand extends BaseCommand {
+module.exports = class ChangePrefixCommand extends BaseCommand {
     constructor() {
-        super('chsuffix', 'moderation', []);
+        super('chprefix', 'moderation', []);
     }
 
     async run(client, message, args) {
         //Si le propriétaire du serveur a envoyé le message
+        //Ou si la personne qui a envoyé la requette possède le rôle d'aministration
         if (message.member.roles.cache.some(r => StateManager.getAdminRole().get(message.guild.id) === r.name)
             || (message.member.id === message.guild.ownerID)) {
             //S'il y a un argument
             if (args.length) {
                 if (args[0].startsWith('\'')) {
                     if (args[args.length - 1][args[args.length - 1].length - 1] == '\'') {
-                        let newSuffix = "";
+                        let newPrefix = "";
                         args.forEach(element => {
-                            newSuffix = newSuffix.concat(element, " ");
+                            newPrefix = newPrefix.concat(element, " ");
                         });
-                        newSuffix = newSuffix.slice(1, newSuffix.length - 2);
+                        newPrefix = newPrefix.slice(1, newPrefix.length - 2);
                         try {
                             await StateManager.getConnection().query(
-                                `UPDATE GuildConfigurable SET nameSuffix='${newSuffix}' WHERE guildId='${message.guild.id}'`
+                                `UPDATE GuildConfigurable SET cmdPrefix='${newPrefix}' WHERE guildId='${message.guild.id}'`
                             );
-                            StateManager.suffixUpdated(message.guild.id, newSuffix);
-                            message.reply(`Mise à jour avec succes ! :ok_hand:`);
+                            StateManager.prefixUpdated(message.guild.id, newPrefix);
+                            message.channel.send(`Mise à jour avec succes ! :ok_hand:`);
                         } catch (err) {
                             console.log(err);
                         };
@@ -35,10 +36,11 @@ module.exports = class ChangeSuffixCommand extends BaseCommand {
                     message.reply(`Il manque l'appostrophe de début.`);
                 }
             } else {
-                message.reply(`Il manque le suffix.`);
+                message.reply(`Il manque le prefix.`);
             }
         } else {
-            message.reply(`Tu n'as pas le droit de modifier le suffix. :confused:`);
+            message.reply(`Tu n'as pas le droit de modifier le prefix. :confused:`);
         }
     }
 }
+

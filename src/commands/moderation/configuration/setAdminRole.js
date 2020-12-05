@@ -1,5 +1,5 @@
-const BaseCommand = require('../../utils/structures/BaseCommand');
-const StateManager = require('../../utils/StateManager');
+const BaseCommand = require('../../../utils/structures/BaseCommand');
+const StateManager = require('../../../utils/StateManager');
 
 module.exports = class SetAdminRoleCommand extends BaseCommand {
     constructor() {

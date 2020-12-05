@@ -11,12 +11,12 @@ module.exports = class InfoCommand extends BaseCommand {
     async run(client, message, args) {
         try {
             StateManager.getConnection().query(
-                `SELECT modLogId FROM GuildConfigurable WHERE guildId='${message.guild.id}'`
+                `SELECT modChannelId FROM GuildConfigurable WHERE guildId='${message.guild.id}'`
             ).then(result => {
                 const guildId = message.guild.id;
-                var modLogId = "Aucun";
-                if (result[0][0].modLogId) {
-                    modLogId = result[0][0].modLogId;
+                var modChannelId = "Aucun";
+                if (result[0][0].modChannelId) {
+                    modChannelId = result[0][0].modChannelId;
                 }
                 
                 const embed = new MessageEmbed()
@@ -30,7 +30,7 @@ module.exports = class InfoCommand extends BaseCommand {
                     { name: `Commande d'invocation`, value: `'${StateManager.getPrefix().get(guildId)}'` },
                     { name: `Suffix à ajouter`, value: `'${StateManager.getSuffix().get(guildId)}'` },
                     { name: `Role admin`, value: `${StateManager.getAdminRole().get(guildId)}` },
-                    { name: `ID de log de moderation`, value: `${modLogId}` },);
+                    { name: `ID de log de moderation`, value: `${modChannelId}` },);
                 // Send the embed to the same channel as the message
                 message.channel.send(embed);
             }).catch(err => {

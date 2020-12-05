@@ -16,7 +16,7 @@ module.exports = class ShhhCommand extends BaseCommand {
                 message.channel.send(`${member} :shushing_face:`);
             });
         } else {
-            message.reply("You didn't mention a user to shhh! :shushing_face:");
+            message.reply("Tu n'as pas mentionné de personne à taire ! :shushing_face:");
         }
     }
 }

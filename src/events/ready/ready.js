@@ -21,6 +21,7 @@ module.exports = class ReadyEvent extends BaseEvent {
                 StateManager.prefixUpdated(guildId, prefix);
                 StateManager.suffixUpdated(guildId, nameSuffix);
                 StateManager.adminRoleUpdated(guildId, adminRole);
+                //StateManager.messageRoleUpdated(guildId)
 
                 //Met en cache le message dans le channel role
                 //Il ne faut qu'un seul message pour ne pas surcharger le bot
