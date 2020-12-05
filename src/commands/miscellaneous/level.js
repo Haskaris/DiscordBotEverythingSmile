@@ -15,7 +15,7 @@ module.exports = class LevelCommand extends BaseCommand {
             ).then(result => {
                 if (result[0].length == 0) {
                     //Le membre n'a pas de niveau dans la guild
-                    message.channel.send(`Niveau courant 1\nExperience courante 0\n Experience pour le niveau suivant 50`);  
+                    message.channel.send(`Niveau courant 1\nExperience courante 0/50`);  
                 } else {
                     const lvl = result[0][0].lvl;
                     const xp = result[0][0].xp;

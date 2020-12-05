@@ -22,15 +22,16 @@ module.exports = class InfoCommand extends BaseCommand {
                 const embed = new MessageEmbed()
                 // Set the color of the embed
                 .setColor(0x0099ff)
-                .setAuthor('Haskaris')
                 // Set the title of the field
                 .setTitle('Liste des informations retenues (qui peuvent être utile) dans la base de donnée')
                 // Set the main content of the embed
                 .addFields(
                     { name: `Commande d'invocation`, value: `'${StateManager.getPrefix().get(guildId)}'` },
-                    { name: `Suffix à ajouter`, value: `'${StateManager.getSuffix().get(guildId)}'` },
                     { name: `Role admin`, value: `${StateManager.getAdminRole().get(guildId)}` },
-                    { name: `ID de log de moderation`, value: `${modChannelId}` },);
+                    { name: `Suffix à ajouter`, value: `'${StateManager.getSuffix().get(guildId)}'` },
+                    { name: `ID de channel de moderation`, value: `${modChannelId}` },
+                    { name: `ID du channel de role`, value: `${StateManager.getRoleChannelId().get(guildId)}` },
+                    );
                 // Send the embed to the same channel as the message
                 message.channel.send(embed);
             }).catch(err => {

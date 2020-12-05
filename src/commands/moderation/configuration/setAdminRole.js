@@ -3,7 +3,7 @@ const StateManager = require('../../../utils/StateManager');
 
 module.exports = class SetAdminRoleCommand extends BaseCommand {
     constructor() {
-        super('setadminrole', 'moderation', []);
+        super('setadminrole', 'moderation', ['sar']);
     }
 
     //TODO: Vérifier que le role existe bien
@@ -32,15 +32,11 @@ module.exports = class SetAdminRoleCommand extends BaseCommand {
                         } else {
                             message.reply(`Impossible d'assigner un role sans nom`);
                         }
-                    } else {
-                        message.reply(`Il manque l'appostrophe de fin`);
+                        return;
                     }
-                } else {
-                    message.reply(`Il manque l'appostrophe de début`);
                 }
-            } else {
-                message.reply(`Il manque le role`);
-            }
+            } 
+            message.reply(`Utilisation : setadminrole '<NOM_DU_ROLE>'`);
         } else {
             message.reply(`Seul le propriétaire du serveur peut changer le role de modérateur`);
         }

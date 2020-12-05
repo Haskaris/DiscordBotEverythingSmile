@@ -3,7 +3,7 @@ const StateManager = require('../../../utils/StateManager');
 
 module.exports = class ChangePrefixCommand extends BaseCommand {
     constructor() {
-        super('chprefix', 'moderation', []);
+        super('changeprefix', 'moderation', ['chp', 'chprefix']);
     }
 
     async run(client, message, args) {
@@ -29,15 +29,11 @@ module.exports = class ChangePrefixCommand extends BaseCommand {
                         } catch (err) {
                             console.log(err);
                         };
-                    } else {
-                        message.reply(`Il manque l'appostrophe de fin.`);
+                        return;
                     }
-                } else {
-                    message.reply(`Il manque l'appostrophe de début.`);
                 }
-            } else {
-                message.reply(`Il manque le prefix.`);
             }
+            message.reply(`Utilisation : changeprefix '<NOUVEAU_PREFIX>'`);
         } else {
             message.reply(`Tu n'as pas le droit de modifier le prefix. :confused:`);
         }

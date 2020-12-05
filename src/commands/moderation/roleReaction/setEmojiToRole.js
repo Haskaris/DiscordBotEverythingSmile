@@ -43,6 +43,7 @@ module.exports = class SetEmojiToRoleCommand extends BaseCommand {
                 });
             } else {
                 message.reply(`Nombre d'argument incorrect : id du channel puis id du message puis emoji puis id du role`);
+                message.reply(`Utilisation : setemojitorole <EMOJI ou ID_EMOJI s'il est personnalisé> <ID_ROLE>`);
             }
         } else {
             message.reply(`Seul le propriétaire du serveur peut changer le role de modérateur`);

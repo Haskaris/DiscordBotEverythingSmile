@@ -3,7 +3,7 @@ const StateManager = require('../../../utils/StateManager');
 
 module.exports = class ChangeSuffixCommand extends BaseCommand {
     constructor() {
-        super('chsuffix', 'moderation', []);
+        super('changesuffix', 'moderation', ['chs', 'chsuffix']);
     }
 
     async run(client, message, args) {
@@ -28,15 +28,11 @@ module.exports = class ChangeSuffixCommand extends BaseCommand {
                         } catch (err) {
                             console.log(err);
                         };
-                    } else {
-                        message.reply(`Il manque l'appostrophe de fin.`);
+                        return;
                     }
-                } else {
-                    message.reply(`Il manque l'appostrophe de début.`);
                 }
-            } else {
-                message.reply(`Il manque le suffix.`);
             }
+            message.reply(`Utilisation : changesuffix '<NOUEVAU_SUFFIX>'`);
         } else {
             message.reply(`Tu n'as pas le droit de modifier le suffix. :confused:`);
         }

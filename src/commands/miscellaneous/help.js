@@ -15,13 +15,13 @@ module.exports = class HelpCommand extends BaseCommand {
         const embed = new MessageEmbed()
         // Set the color of the embed
         .setColor(0x0099ff)
-        .setAuthor('Haskaris')
         // Set the title of the field
         .setTitle('Liste des commandes')
         // Set the main content of the embed
         .addFields(
             { name: 'shhh <u>', value: 'Censure un utilisateur' },
             { name: 'unshhh <u>', value: 'Dé-censure un utilisateur' },
+            { name: 'lvl', value: 'Donne le niveau de l\'utilisateur' },
             { name: 'help', value: 'Donne toutes les commandes disponibles' },
             { name: 'info', value: 'Donne toutes les données du serveur présente dans la base de donnée' },
             { name: 'chprefix <p>', value: 'Change le prefix d\'invocation\n(Modérateur)' },

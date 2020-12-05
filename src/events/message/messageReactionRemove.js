@@ -23,7 +23,7 @@ module.exports = class MessageReactionRemoveEvent extends BaseEvent {
             }
 
             StateManager.getConnection().query(
-                `SELECT gre.roleId FROM GuildRoleEmoji gre, GuildConfigurable gc WHERE gre.guildId='${reaction.message.guild.id}' and gre.guildId = gc.guildId and gc.roleChannelId='${reaction.message.channel.id}' and gre.emoji='${reaction.emoji.id}'`
+                `SELECT roleId FROM GuildRoleEmoji WHERE guildId='${reaction.message.guild.id}' and emoji='${reaction.emoji.id}'`
             ).then(result => {
                 reaction.message.guild.members.fetch({ user, cache: true })
                 .then(e => {
