@@ -1,8 +1,6 @@
 
 
 
-
-
 ## Init
 ### Env
 You need a fil named '.env' but it's personnal you know :(<br>
@@ -16,3 +14,7 @@ DB_NAME={your database name}
 
 ### Database
 To init your database start 'schema.sql'
+
+### Lavalink
+You need to download lavalink<br>
+https://github.com/Frederikam/Lavalink/
