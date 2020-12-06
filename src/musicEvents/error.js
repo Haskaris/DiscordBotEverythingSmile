@@ -6,7 +6,7 @@ module.exports = class NodeErrorEvent extends BaseEvent {
     }
 
     async run(client, node, error) {
-        console.log("An error has occured");
+        console.log("Une erreur est venue");
         console.log(error.message);
     }
 }

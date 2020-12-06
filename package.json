@@ -1,7 +1,7 @@
 {
   "name": "DiscordBot-mysql",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Mon bot discord, il fait pas grand chose pour l'instant",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
     "start": "node ./src/bot.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Haskaris",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.2.0",

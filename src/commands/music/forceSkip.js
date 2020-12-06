@@ -1,16 +1,17 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
+const { MessageEmbed } = require('discord.js');
 
-module.exports = class LeaveCommand extends BaseCommand {
+let USED = false;
+module.exports = class ForceSkipCommand extends BaseCommand {
     constructor() {
-        super('leave', 'music', ['l']);
+        super('forceskip', 'music', ['fs']);
     }
 
-    //Si le client est déconnecté, ça marche pas car le client n'est pas détruit
     async run(client, message, args) {
         const { id } = message.guild;
         const player = client.music.players.get(id);
         const { channel } = message.member.voice;
-        
+
         if (!player) {
             message.channel.send(`Client non connecté`);
             return;
@@ -21,7 +22,7 @@ module.exports = class LeaveCommand extends BaseCommand {
             return;
         }
 
-        client.music.players.destroy(id);
-        message.channel.send(`Client bien déconnecté`);
+        player.stop();
+        message.channel.send(`Skipping... ${player.queue[0].title}`);
     }
 }

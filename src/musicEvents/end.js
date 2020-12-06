@@ -6,7 +6,7 @@ module.exports = class QueueEndEvent extends BaseEvent {
     }
 
     async run(client, player, track) {
-        player.textChannel.send("Queue has ended.");
-        client.music.players.destroy(player.guild.id);
+        player.textChannel.send("Plus de musique à jouer");
+        //client.music.players.destroy(player.guild.id);
     }
 }

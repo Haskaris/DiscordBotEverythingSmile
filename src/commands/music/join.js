@@ -2,20 +2,23 @@ const BaseCommand = require('../../utils/structures/BaseCommand');
 
 module.exports = class JoinCommand extends BaseCommand {
     constructor() {
-        super('join', 'music', []);
+        super('join', 'music', ['j']);
     }
 
     async run(client, message, args) {
-        const { channel } = message.member.voice;
 
-        if (channel) {
-            const player = client.music.players.spawn({
-                guild: message.guild,
-                voiceChannel: channel,
-                textChannel: message.channel
-            });
+        if (message.member.voice.channel) {
+            if (client.music.players.size < 5) {
+                const player = client.music.players.spawn({
+                    guild: message.guild,
+                    voiceChannel: message.member.voice.channel,
+                    textChannel: message.channel
+                });
+            } else {
+                message.reply(`je ne pensais pas que ce bot serait si connu...\nLa connexion du bot est surchargé\nFaut contacter Haskaris#3930`)
+            }
         } else {
-            message.channel.send(`Please join a voice channel.`);
+            message.reply(`il faut rejoindre un channel`);
         }
     }
 }
