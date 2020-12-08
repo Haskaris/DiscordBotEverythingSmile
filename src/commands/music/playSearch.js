@@ -1,10 +1,9 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
-//const { MessageEmbed } = require('discord.js');
-const Builder = require('../../utils/builder');
+const { MessageEmbed } = require('discord.js');
 
-module.exports = class PlayCommand extends BaseCommand {
+module.exports = class PlaySearchCommand extends BaseCommand {
     constructor() {
-        super('play', 'music', ['p']);
+        super('playsearch', 'music', ['ps']);
     }
 
     async run(client, message, args) {
@@ -37,6 +36,7 @@ module.exports = class PlayCommand extends BaseCommand {
             return;
         }
 
+
         var argsWithoutURL = new Array();
         var argsWithURL = new Array();
 
@@ -48,28 +48,53 @@ module.exports = class PlayCommand extends BaseCommand {
             }
         });
 
+        //Je ne vois pas pourquoi on voudrait chercher des url
         //On donne des urls
         if (argsWithURL.length > 0) {
             argsWithURL.forEach(async element => {
                 const searchResults = await client.music.search(element, message.author);
                 const track = searchResults.tracks[0];
-
+                message.channel.send(`Mise en file ${track.title}`);
                 player.queue.add(track);
-                message.channel.send(Builder.createMessageToAddInQueue(player, track));
-
                 if (!player.playing)
                     player.play();
             });
         } else {
+            let i = 0;
             const searchResults = await client.music.search(argsWithoutURL.join(' '), message.author);
-            const track = searchResults.tracks[0];
+            const tracks = searchResults.tracks.slice(0, 10);
+            const tracksInfo = tracks.map(r => `${++i}) ${r.title}`).join('\n');
+            const embed = new MessageEmbed()
+                .setTitle('Résultats')
+                .setColor(0x0099ff);
 
-            player.queue.add(track);
+            var file = "";
+            for (let i = 1; i < player.queue.length; i++) {
+                file = `${i}. [${player.queue[i].title}](${player.queue[i].uri})\n`
+            }
 
-            message.channel.send(Builder.createMessageToAddInQueue(player, track));
+            //embed.addFields({name: 'Musique à venir', value: file});
+            embed.setDescription(file);
+            
+            message.channel.send(embed);
+            
+            const filter = m => (message.author.id === m.author.id) && (m.content >= 1 && m.content <= tracks.length);
 
-            if (!player.playing)
-                player.play();
+            try {
+                const response = await message.channel.awaitMessages(filter, { max: 1, time: 10000, errors: ['time'] });
+
+                if (response) {
+                    const entry = response.first().content;
+
+                    const track = tracks[entry-1];
+                    player.queue.add(track);
+                    message.channel.send(Builder.createMessageToAddInQueue(player, track));
+                    if (!player.playing)
+                        player.play();
+                }
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 }
