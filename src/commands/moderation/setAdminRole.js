@@ -30,19 +30,19 @@ module.exports = class SetAdminRoleCommand extends BaseCommand {
                                 console.log(err);
                             };
                         } else {
-                            message.channel.send(`Impossible d'assigner un role sans nom`);
+                            message.channel.send(`Impossible d'assigner un role sans nom.`);
                         }
                     } else {
-                        message.channel.send(`Il manque l'appostrophe de fin`);
+                        message.channel.send(`Il manque l'appostrophe de fin.`);
                     }
                 } else {
-                    message.channel.send(`Il manque l'appostrophe de début`);
+                    message.channel.send(`Il manque l'appostrophe de début.`);
                 }
             } else {
-                message.channel.send(`Il manque le role`);
+                message.channel.send(`Il manque le role.`);
             }
         } else {
-            message.channel.send(`Seul le propriétaire du serveur peut changer le role de modérateur`);
+            message.channel.send(`Seul le propriétaire du serveur peut changer le role de modérateur.`);
         }
     }
 }
