@@ -1,31 +1,44 @@
 const BaseEvent = require('../../utils/structures/BaseEvent');
 const StateManager = require('../../utils/StateManager');
 
-const guildCmdPrefixes = new Map();
-
 module.exports = class ReadyEvent extends BaseEvent {
     constructor() {
         super('ready');
-        this.connection = StateManager.connection;
     }
 
     async run(client) {
-        console.log(`${client.user.tag} logged in.`);
+        console.log(`${client.user.tag} - try to log in.`);
         client.guilds.cache.forEach(guild => {
-            this.connection.query(
-                `SELECT cmdPrefix, adminRole FROM GuildConfigurable WHERE guildId='${guild.id}'`
+            StateManager.getConnection().query(
+                `SELECT cmdPrefix, adminRole, nameSuffix, roleChannelId FROM GuildConfigurable WHERE guildId='${guild.id}'`
             ).then(result => {
                 const guildId = guild.id;
                 const prefix = result[0][0].cmdPrefix;
+                const nameSuffix = result[0][0].nameSuffix;
                 const adminRole = result[0][0].adminRole;
-                guildCmdPrefixes.set(guildId, prefix);
-                StateManager.emit('prefixFetched', guildId, prefix);
-                StateManager.emit('adminRoleFetched', guildId, adminRole);
+                const roleChannelId = result[0][0].roleChannelId
+
+                StateManager.prefixUpdated(guildId, prefix);
+                StateManager.suffixUpdated(guildId, nameSuffix);
+                StateManager.adminRoleUpdated(guildId, adminRole);
+                StateManager.roleChannelUpdated(guildId, roleChannelId);
+
+                //Met en cache le message dans le channel role
+                //Il ne faut qu'un seul message pour ne pas surcharger le bot
+                guild.channels.cache.forEach(channel => {
+                    if (channel.id == roleChannelId) {
+                        channel.messages.fetch();
+                    }
+                });
+
+                guild.members.fetch();
+                
             }).catch(err => {
-                console.log("Problème de préfix dans la BDD");
+                console.log("Problème d'initialisation des valeurs");
                 console.log(err);
             });
         });
+        console.log(`${client.user.tag} - logged in.`);
     }
 }
 

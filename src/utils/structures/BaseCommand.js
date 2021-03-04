@@ -6,6 +6,6 @@ module.exports = class BaseCommand {
     }
 
     async run(client, message, args) {
-        message.channel.send(`Not implemented yet`);
+        message.channel.send(`Command not implemented yet`);
     }
 }

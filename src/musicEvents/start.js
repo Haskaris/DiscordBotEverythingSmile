@@ -6,6 +6,6 @@ module.exports = class TrackStartEvent extends BaseEvent {
     }
 
     async run(client, player, track) {
-        player.textChannel.send(`Now playing: ${track.title}`);
+        player.textChannel.send(`Joue: ${track.title}`);
     }
 }

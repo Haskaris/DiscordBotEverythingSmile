@@ -3,7 +3,7 @@ const { Client } = require('discord.js');
 const { ErelaClient } = require('erela.js');
 
 //Création du client
-const client = new Client();
+const client = new Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 const StateManager = require('./utils/StateManager');
 
 const { registerCommands, registerEvents, registerMusicEvents } = require('./utils/register');
@@ -17,15 +17,17 @@ const { registerCommands, registerEvents, registerMusicEvents } = require('./uti
 
     await client.login(process.env.BOT_TOKEN);
 
-
     //Étudier en profondeur l'ajout de musique
-    /*client.music = new ErelaClient(client, [
+    client.music = new ErelaClient(client, [
         {
             host: process.env.HOST,
             port: process.env.PORT,
             password: process.env.PASSWORD
         }
-    ]);*/
+    ]);
 
-    //await registerMusicEvents(client.music, '../musicEvents');
+    await registerMusicEvents(client.music, '../musicEvents');
+
+    setInterval(StateManager.clearXPBlocker, 2500);
+    setInterval(StateManager.clearShhh, 300000);
 })();
